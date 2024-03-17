@@ -5,6 +5,7 @@ let searchContainerEl = document.getElementById("search-container");
 let resultListEl = document.getElementById("result-list");
 let resultMovieEl = document.getElementById("result-movie");
 let appInfoEl = document.getElementById("app-info");
+let trailerEl = document.getElementById("result-trailer");
 
 // Importerar API-nycklar.
 import { omdbApiKey } from "./apikey.js";
@@ -120,9 +121,58 @@ async function showMovieInfo(movieId) {
         // Lägger till listelementen i listan.
         resultMovieEl.appendChild(movieDescriptionItem);
 
+        // Anropar funktion som hämtar trailer och skickar med ID för vald film.
+        showTrailer(movieId);
+
     // Felmeddelande som visas i app och i konsollen.
     } catch (error) {
         resultMovieEl.innerHTML = "Something went wrong. Try again!";
+        console.error("Fetch failed. This message was created:", error);
+    }
+};
+
+// Hämtar trailer för vald film från IMDb och skriver ut till DOM.
+async function showTrailer(movieId) {
+    const url = `https://imdb8.p.rapidapi.com/title/v2/get-trailers?tconst=${movieId}`;
+    // Alternativ som innefattar API-nyckel.
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': `${imdbApiKey}`,
+            'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+        }
+    };
+
+    try {
+        // Hämtar in trailer-resultat från sökning.
+        const response = await fetch(url, options);
+        const outcome = await response.json();
+
+        // Lagrar trailern och dess id för vald film i en variabel.
+        const trailer = outcome.data.title.primaryVideos.edges[0].node;
+        const trailerId = trailer.id;
+
+        // Skapar en iframe för trailern. 
+        const iframe = document.createElement('iframe');
+        // Ställer in attribut för iframen.
+        iframe.setAttribute('width', '480');
+        iframe.setAttribute('height', '315');
+        iframe.setAttribute('src', `https://www.imdb.com/video/imdb/${trailerId}/imdb/embed?autoplay=false&width=560`);
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allowfullscreen', '');
+
+        // Skapar en rubrik för trailern.
+        const trailerHeading = document.createElement("h3");
+        // Matar in text-innehåll i rubriken.
+        trailerHeading.textContent = "Se trailern här!";
+
+        // Lägger till rubrik och trailer i containern.
+        trailerEl.appendChild(trailerHeading);
+        trailerEl.appendChild(iframe);
+        
+    // Felmeddelande som visas i app och i konsollen.
+    } catch (error) {
+        trailerEl.innerHTML = "Something went wrong with the trailer for this movie. Try again!";
         console.error("Fetch failed. This message was created:", error);
     }
 };
