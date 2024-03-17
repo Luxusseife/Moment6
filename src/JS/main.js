@@ -9,18 +9,18 @@ let appInfoEl = document.getElementById("app-info");
 import { omdbApiKey } from "./apikey.js";
 import { imdbApiKey } from "./apikey.js";
 
-// Händelselyssnare.
+// Händelselyssnare för sök-knapp.
 const searchButtonEl = document.getElementById("search-button");
 searchButtonEl.addEventListener("click", getInput);
 
-// Hämtar input från sökfältet och anropar fetch-funktionen.
+// Hämtar input från sökfältet.
 function getInput() {
     const inputValue = document.getElementById("search-input").value;
-    // Anropar funktionen och skickar med inputen. 
+    // Anropar fetch-funktionen och skickar med inputen. 
     getData(inputValue);
-};
+}
 
-// Hämtar data från OMDb med "värdet" från sökfältet (10 rader/filmer är default).
+// Hämtar data från OMDb API med "värdet" från sökfältet (10 rader/filmer är default).
 async function getData(inputValue) {
     try {
         // Hämtar in film-resultat från sökning.
@@ -45,7 +45,7 @@ function showMovieList(data) {
     resultMovieEl.innerHTML = "";
     appInfoEl.innerHTML = "";
 
-    // Skriver ny info till användaren.
+    // Skriver ut ny info till användaren.
     appInfoEl.innerHTML = "Click on a movietitle or make a new search!";
 
     // Kollar om filmtiteln förekommer i API:et och skriver ut en lista.
@@ -56,7 +56,7 @@ function showMovieList(data) {
 
         // Loopar genom objekt-array och skriver ut en lista med filmer.
         data.Search.forEach((movie) => {
-            // Skapar ett listelement för varje film.
+            // Skapar ett listelement för varje film i DOM.
             const movieItem = document.createElement("li");
             movieItem.innerHTML = `
                 <h3>${movie.Title}, ${movie.Year}</h3>
@@ -65,17 +65,17 @@ function showMovieList(data) {
             // Lägger till listelementen i listan.
             resultListEl.appendChild(movieItem);
 
-            // Lägger till en händelselyssnare på varje listelement och skickar med film-ID till ny funktion.
+            // Lägger till en händelselyssnare på varje listelement och skickar med film-ID till ny fetch-funktion.
             movieItem.addEventListener("click", () => showMovieInfo(movie.imdbID));
         });
    
-    // Meddelande om filmtiteln saknas i API:et.
+    // Meddelande som skrivs ut om filmtiteln saknas i API:et.
     } else {
         resultListEl.innerHTML = "The movietitle you searched for doesn't exist. Try again with a different title!";
     }
-};
+}
 
-// Hämtar information om en specifik film från IMDb och skriver ut till DOM.
+// Hämtar information om en specifik film från IMDb API och skriver ut till DOM.
 async function showMovieInfo(movieId) {
     const url = `https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=${movieId}`;
     // Alternativ som innefattar API-nyckel.
@@ -92,14 +92,14 @@ async function showMovieInfo(movieId) {
         const response = await fetch(url, options);
         const result = await response.json();
 
-        // Rensar tidigare information.
+        // Deklarerar en ny variabel och rensar tidigare information.
         let searchContainerEl = document.getElementById("search-container");
         searchContainerEl.innerHTML = "";
         resultListEl.innerHTML = "";
         resultMovieEl.innerHTML = "";
         appInfoEl.innerHTML = "";
 
-        // Skriver ny info till användaren.
+        // Skriver ut ny info till användaren.
         appInfoEl.innerHTML = `
             <h1>${result.title.title}</h1>
         `;
@@ -117,7 +117,7 @@ async function showMovieInfo(movieId) {
             <h4>Rating on IMDb: ${result.ratings.rating}</h4>
         `;
 
-        // Lägger till listelementen i listan.
+        // Lägger till artikeln i containern.
         resultMovieEl.appendChild(movieDescriptionItem);
 
         // Anropar funktion som hämtar trailer och skickar med ID för vald film.
@@ -128,9 +128,9 @@ async function showMovieInfo(movieId) {
         resultMovieEl.innerHTML = "Something went wrong. Try again!";
         console.error("Fetch failed. This message was created:", error);
     }
-};
+}
 
-// Hämtar trailer för vald film från IMDb och skriver ut till DOM.
+// Hämtar trailer för vald film från IMDb API och skriver ut till DOM.
 async function showTrailer(movieId) {
     const url = `https://imdb8.p.rapidapi.com/title/v2/get-trailers?tconst=${movieId}`;
     // Alternativ som innefattar API-nyckel.
@@ -141,6 +141,9 @@ async function showTrailer(movieId) {
             'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
         }
     };
+
+    // Deklarerar en ny variabel för trailer-container.
+    let trailerEl = document.getElementById("result-trailer");
 
     try {
         // Hämtar in trailer-resultat från sökning.
@@ -166,10 +169,9 @@ async function showTrailer(movieId) {
             // Skapar en rubrik för trailern.
             const trailerHeadingEl = document.createElement("h3");
             // Matar in text-innehåll i rubriken.
-            trailerHeadingEl.textContent = "Se trailern här!";
+            trailerHeadingEl.textContent = "Se en trailer för filmen här!";
 
             // Lägger till rubrik och trailer i containern.
-            let trailerEl = document.getElementById("result-trailer");
             trailerEl.appendChild(trailerHeadingEl);
             trailerEl.appendChild(iframe);
 
@@ -186,7 +188,7 @@ async function showTrailer(movieId) {
         trailerEl.innerHTML = "Something went wrong with the trailer for this movie. Try again!";
         console.error("Fetch failed. This message was created:", error);
     }
-};
+}
 
 // Lägger till en "ny sök"-knapp i DOM.
 function showNewSearchButton() {
@@ -201,7 +203,7 @@ function showNewSearchButton() {
         window.location.href = "index.html";
     });
 
-    // Lägger till knappen efter slutresultatet av filmsöken.
+    // Lägger till knappen i containern, efter slutresultatet av filmsöken.
     let newSearchEl = document.getElementById("new-search");
     newSearchEl.appendChild(newSearchButtonEl);
-};
+}
