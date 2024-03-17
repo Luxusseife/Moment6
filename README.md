@@ -12,5 +12,6 @@ Syftet med uppgiften är omsätta kunskaper från tidigare kursmoment och skapa 
 3. Skapa en enkel index-sida med header, en sök-container och en resultat-container.
 4. Skapa funktionalitet för en filmsök och en resultatlista.
 5. Publicera sidan på Github för versionshantering och på Netlify för att kunna följa autmatisk publicering av nya ändringar. 
+6. Skapa en dev-branch i GitHub.
 
 #### _Skapad av Jenny Lind, jeli2308_.

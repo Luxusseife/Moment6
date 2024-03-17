@@ -32,9 +32,8 @@ async function getData(inputValue) {
     } catch (error) {
         resultListEl.innerHTML = "Something went wrong. Try again!";
         console.error("Fetch failed. This message was created:", error);
-}
-
-}
+    }
+};
 
 // Hämtar in efterfrågad data, sorterar och skriver ut i DOM.
 function showMovieList(data) {
@@ -48,6 +47,9 @@ function showMovieList(data) {
 
     // Kollar om filmtiteln förekommer i API:et och skriver ut en lista.
     if (data && data.Search) {
+
+        // Sorterar filmerna i fallande ordning efter utgivningsår.
+        data.Search.sort((a, b) => b.Year.localeCompare(a.Year));
 
         // Loopar genom objekt-array och skriver ut en lista med filmer.
         data.Search.forEach((movie) => {
