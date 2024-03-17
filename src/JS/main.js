@@ -1,11 +1,9 @@
 "use strict";
 
 // Deklarerar variabler som används i multipla funktioner.
-let searchContainerEl = document.getElementById("search-container");
 let resultListEl = document.getElementById("result-list");
 let resultMovieEl = document.getElementById("result-movie");
 let appInfoEl = document.getElementById("app-info");
-let trailerEl = document.getElementById("result-trailer");
 
 // Importerar API-nycklar.
 import { omdbApiKey } from "./apikey.js";
@@ -95,6 +93,7 @@ async function showMovieInfo(movieId) {
         const result = await response.json();
 
         // Rensar tidigare information.
+        let searchContainerEl = document.getElementById("search-container");
         searchContainerEl.innerHTML = "";
         resultListEl.innerHTML = "";
         resultMovieEl.innerHTML = "";
@@ -148,31 +147,61 @@ async function showTrailer(movieId) {
         const response = await fetch(url, options);
         const outcome = await response.json();
 
-        // Lagrar trailern och dess id för vald film i en variabel.
-        const trailer = outcome.data.title.primaryVideos.edges[0].node;
-        const trailerId = trailer.id;
+        // Kollar om filmtrailer förekommer i API:et och skriver ut i DOM.
+        if (outcome.data.title.primaryVideos.edges[0]) {
 
-        // Skapar en iframe för trailern. 
-        const iframe = document.createElement('iframe');
-        // Ställer in attribut för iframen.
-        iframe.setAttribute('width', '480');
-        iframe.setAttribute('height', '315');
-        iframe.setAttribute('src', `https://www.imdb.com/video/imdb/${trailerId}/imdb/embed?autoplay=false&width=560`);
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allowfullscreen', '');
+            // Lagrar trailern och dess id för vald film i en variabel.
+            const trailer = outcome.data.title.primaryVideos.edges[0].node;
+            const trailerId = trailer.id;
 
-        // Skapar en rubrik för trailern.
-        const trailerHeading = document.createElement("h3");
-        // Matar in text-innehåll i rubriken.
-        trailerHeading.textContent = "Se trailern här!";
+            // Skapar en iframe för trailern. 
+            const iframe = document.createElement('iframe');
+            // Ställer in attribut för iframen.
+            iframe.setAttribute('width', '480');
+            iframe.setAttribute('height', '315');
+            iframe.setAttribute('src', `https://www.imdb.com/video/imdb/${trailerId}/imdb/embed?autoplay=false&width=560`);
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allowfullscreen', '');
 
-        // Lägger till rubrik och trailer i containern.
-        trailerEl.appendChild(trailerHeading);
-        trailerEl.appendChild(iframe);
-        
+            // Skapar en rubrik för trailern.
+            const trailerHeadingEl = document.createElement("h3");
+            // Matar in text-innehåll i rubriken.
+            trailerHeadingEl.textContent = "Se trailern här!";
+
+            // Lägger till rubrik och trailer i containern.
+            let trailerEl = document.getElementById("result-trailer");
+            trailerEl.appendChild(trailerHeadingEl);
+            trailerEl.appendChild(iframe);
+
+        // Containern för trailer inkl. rubrik lämnas tom om trailer saknas i API:et.
+        } else {
+            trailerEl.innerHTML = "";
+        }
+
+        // Anropar funktion som skriver ut en "ny sök"-knapp.
+        showNewSearchButton();
+
     // Felmeddelande som visas i app och i konsollen.
     } catch (error) {
         trailerEl.innerHTML = "Something went wrong with the trailer for this movie. Try again!";
         console.error("Fetch failed. This message was created:", error);
     }
+};
+
+// Lägger till en "ny sök"-knapp i DOM.
+function showNewSearchButton() {
+
+    // Skapar knapp.
+    const newSearchButtonEl = document.createElement("button");
+    // Lägger till knapp-text.
+    newSearchButtonEl.textContent = "New search";
+
+    // Händelselyssnare på knappen som laddar om sidan vid klick.
+    newSearchButtonEl.addEventListener("click", () => {
+        window.location.href = "index.html";
+    });
+
+    // Lägger till knappen efter slutresultatet av filmsöken.
+    let newSearchEl = document.getElementById("new-search");
+    newSearchEl.appendChild(newSearchButtonEl);
 };
