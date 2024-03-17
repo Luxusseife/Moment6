@@ -46,7 +46,7 @@ function showMovieList(data) {
     appInfoEl.innerHTML = "";
 
     // Skriver ut ny info till användaren.
-    appInfoEl.innerHTML = "Click on a movietitle or make a new search!";
+    appInfoEl.innerHTML = "Click on a movietitle in the list below <br> or make a new search!";
 
     // Kollar om filmtiteln förekommer i API:et och skriver ut en lista.
     if (data && data.Search) {
@@ -100,8 +100,9 @@ async function showMovieInfo(movieId) {
         appInfoEl.innerHTML = "";
 
         // Skriver ut ny info till användaren.
-        appInfoEl.innerHTML = `
+        searchContainerEl.innerHTML = `
             <h1>${result.title.title}</h1>
+            <h2>${result.title.year}</h2>
         `;
 
         // Lagrar handling i en variabel då objektets egenskaper varierar.
@@ -110,11 +111,10 @@ async function showMovieInfo(movieId) {
         // Skapar en artikel med resultat för vald film.
         const movieDescriptionItem = document.createElement("article");
         movieDescriptionItem.innerHTML = `
-            <h2>${result.title.year}</h2>
             <img src="${result.title.image.url}">
+            <h3>Rating on IMDb: ${result.ratings.rating}</h3>
             <h3>Length: ${result.title.runningTimeInMinutes} minutes</h3>
             <p>${plotText}</p>
-            <h4>Rating on IMDb: ${result.ratings.rating}</h4>
         `;
 
         // Lägger till artikeln i containern.
@@ -160,16 +160,18 @@ async function showTrailer(movieId) {
             // Skapar en iframe för trailern. 
             const iframe = document.createElement('iframe');
             // Ställer in attribut för iframen.
-            iframe.setAttribute('width', '480');
+            iframe.setAttribute('width', '578');
             iframe.setAttribute('height', '315');
             iframe.setAttribute('src', `https://www.imdb.com/video/imdb/${trailerId}/imdb/embed?autoplay=false&width=560`);
             iframe.setAttribute('frameborder', '0');
             iframe.setAttribute('allowfullscreen', '');
 
             // Skapar en rubrik för trailern.
-            const trailerHeadingEl = document.createElement("h3");
+            const trailerHeadingEl = document.createElement("h2");
+            // Sätter ett ID på elementet.
+            trailerHeadingEl.setAttribute("id", "trailerHeading");
             // Matar in text-innehåll i rubriken.
-            trailerHeadingEl.textContent = "Se en trailer för filmen här!";
+            trailerHeadingEl.textContent = "Watch a trailer for the movie below!";
 
             // Lägger till rubrik och trailer i containern.
             trailerEl.appendChild(trailerHeadingEl);
