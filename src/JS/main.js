@@ -24,7 +24,7 @@ function getInput() {
 async function getData(inputValue) {
     try {
         // Hämtar in film-resultat från sökning.
-        const response = await fetch("http://www.omdbapi.com/?s=" + inputValue + `&type=movie&apikey=${omdbApiKey}`);
+        const response = await fetch("https://www.omdbapi.com/?s=" + inputValue + `&type=movie&apikey=${omdbApiKey}`);
         const data = await response.json();
 
         // Anropar funktion som visar en lista med filmer. Skickar med datan.
