@@ -6,3 +6,64 @@
 }
 // Typsnitt.
 $font-stack: "Houschka Rounded ExtraBold", sans-serif;
+
+// Färger.
+$primary-color: #6e0101; // Mörkröd
+$secondary-color: #ffd700; // Guld
+
+$white: #ffffff;
+$black: #000000;
+
+// Mixins för containers.
+
+// Borders, vit.
+@mixin border-and-radius-white {
+    border: 3px solid $white;
+    border-radius: 10px;
+}
+
+// Borders, svart.
+@mixin border-and-radius-black {
+    border: 3px solid $black;
+    border-radius: 10px;
+}
+
+// Svart bakgrund.
+@mixin background-black {
+    background-color: $black;
+    color: $white;
+}
+
+// Vit bakgrund.
+@mixin background-white {
+    background-color: $white;
+    color: $black;
+}
+
+// Knappar.
+@mixin button-colors {
+    background-color: $primary-color;
+    color: $white;
+    text-shadow: 2px 3px 3px black;
+}
+
+// Popcorn-bägare.
+@mixin popcorn-animation {
+    display: block;
+    width: 97px;
+    height: 177px;
+    margin: 0 auto;
+    cursor: pointer;
+    background-image: url('../Assets/popcorn.png');
+    background-size: cover;
+    animation: popcornShake 800ms linear infinite;
+}
+
+// Sammansatta containers/element.
+@mixin border-not-top {
+    border-bottom: 3px solid $white;
+    border-left: 3px solid $white;
+    border-right: 3px solid $white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

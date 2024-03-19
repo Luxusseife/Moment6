@@ -112,8 +112,8 @@ async function showMovieInfo(movieId) {
         const movieDescriptionItem = document.createElement("article");
         movieDescriptionItem.innerHTML = `
             <img src="${result.title.image.url}">
-            <h3>Rating on IMDb: ${result.ratings.rating}</h3>
-            <h3>Length: ${result.title.runningTimeInMinutes} minutes</h3>
+            <h3 id="rating">Rating: ${result.ratings.rating} / 10.</h3>
+            <h3>Length: ${result.title.runningTimeInMinutes} minutes.</h3>
             <p>${plotText}</p>
         `;
 
@@ -160,7 +160,7 @@ async function showTrailer(movieId) {
             // Skapar en iframe för trailern. 
             const iframe = document.createElement('iframe');
             // Ställer in attribut för iframen.
-            iframe.setAttribute('width', '578');
+            iframe.setAttribute('width', '100%');
             iframe.setAttribute('height', '315');
             iframe.setAttribute('src', `https://www.imdb.com/video/imdb/${trailerId}/imdb/embed?autoplay=false&width=560`);
             iframe.setAttribute('frameborder', '0');
@@ -171,7 +171,7 @@ async function showTrailer(movieId) {
             // Sätter ett ID på elementet.
             trailerHeadingEl.setAttribute("id", "trailerHeading");
             // Matar in text-innehåll i rubriken.
-            trailerHeadingEl.textContent = "Watch a trailer for the movie below!";
+            trailerHeadingEl.textContent = "Watch a trailer for the movie here!";
 
             // Lägger till rubrik och trailer i containern.
             trailerEl.appendChild(trailerHeadingEl);

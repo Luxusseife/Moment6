@@ -1,38 +1,16 @@
 @use 'base' as *;
 @use 'keyframes';
 
-// Header.
-header {
-    display: flex;
-    justify-content: space-evenly;
-    background-color: black;
-    color: white;
-    box-shadow: 0 3px 20px 10px black;
-    padding: 1rem;
-    margin-bottom: 7rem;
-
-    // Animerad popcorn-bägare.
-    .popcorn {
-        width: 97px;
-        height: 177px;
-        cursor: pointer;
-        background-image: url('../Assets/popcorn.png');
-        background-size: cover;
-
-        &:hover {
-            animation: popcornShake 400ms linear infinite;
-        }
-    }
-}
-
 // Body.
 body {
     font: 100% $font-stack;
-    color: white;
+    @include background-black;
     background-image: url(../Assets/background.png);
     background-size: cover;
+    background-position: bottom 200px;
+    background-repeat: no-repeat;
 
-    /* Rubriker. */
+    // Rubriker.
     h1 {
         text-align: center;
         margin: 3rem auto 1rem auto;
@@ -41,50 +19,87 @@ body {
     h2 {
         text-align: center;
         margin: 2rem auto 2rem auto;
+        font-size: 24px;
+        max-width: 30ch;
     }
+}
+
+// Header.
+header {
+    background-color: black;
+    text-shadow: 3px 5px 3px $primary-color;
+    box-shadow: 0 3px 20px 10px black;
+    padding: 1rem;
+    margin-bottom: 3rem;
+    width: 100%;
+
+    // Animerade popcorn-bägare som ej syns i mobil och tablet-läge.
+    .popcorn {
+        display: none;
+    }
+
+    .popcorn {
+        display: none;
+    }
+}
+
+// Animerad popcorn-bägare i mobil- och tablet-läge.
+.popcorn-mobile {
+    @include popcorn-animation;
+}
+
+// Pausar animation vid hover.
+.popcorn-mobile:hover {
+    animation-play-state: paused;
+}
+
+// Fortsätter animation när hover slutar.
+.popcorn-mobile.paused {
+    animation-play-state: running;
 }
 
 // Sök-container.
 .search-container {
-    background-color: black;
-    border: 3px solid white;
-    color: white;
-    border-radius: 10px;
+    @include background-black;
+    @include border-and-radius-white;
+    width: 90%;
     max-width: 60ch;
     margin: 0 auto;
     text-align: center;
-    margin-bottom: 3rem;
+    margin: 3rem auto 3rem auto;
 
+    // Sökfält.
     #search-input {
         font: 100% $font-stack;
         width: 250px;
         height: 40px;
         font-size: 125%;
-        background-color: white;
-        color: black;
-        border: 3px solid black;
-        border-radius: 10px;
+        @include background-white;
+        @include border-and-radius-black;
         text-align: center;
         margin: 1rem;
         font-weight: bold;
     }
 
+    // Sök-knapp.
     #search-button {
         font: 100% $font-stack;
         width: 150px;
         height: 40px;
         font-size: 125%;
-        background-color: darkred;
-        color: white;
-        border: 3px solid white;
-        border-radius: 10px;
+        @include button-colors;
+        @include border-and-radius-white;
         text-align: center;
         margin: 1rem 0 2rem;
         font-weight: bold;
     }
 
+    // Hover-effekt på sök-knapp.
     #search-button:hover {
         cursor: pointer;
+        background-color: $secondary-color;
+        color: black;
+        text-shadow: 2px 3px 3px $white;
     }
 }
 
@@ -92,71 +107,85 @@ body {
 #result-list {
     list-style-type: none;
 
+    // Listelement.
     li {
-        background-color: black;
-        border: 3px solid white;
-        border-radius: 10px;
+        @include background-black;
+        @include border-and-radius-white;
         margin: 1rem auto 1rem auto;
+        width: 90%;
     }
 
+    // Hover-effekt på listelement.
     li:hover {
         cursor: pointer;
+        background-color: $secondary-color;
+        color: black;
+        text-shadow: 3px 3px 3px $white;
     }
 }
 
 // Resultat-container.
 .result-container {
     text-align: center;
-    margin: 0 auto 2rem auto;
+    margin: 0 auto;
     max-width: 60ch;
+    width: 90%;
 
+    // Rubrik och brödtext.
     h3 {
         text-align: center;
         margin: 1rem auto 1rem auto;
     }
 
     p {
-        background-color: white;
-        color: black;
-        border: 3px solid black;
-        border-radius: 10px;
+        @include background-white;
+        @include border-and-radius-black;
         padding: 1rem;
         margin: 1rem;
         line-height: 1.6;
     }
 
+    // Specifik filmbeskrivning.
     article {
-        background-color: black;
-        border: 3px solid white;
-        border-radius: 10px;
+        @include background-black;
+        @include border-not-top;
+        margin-top: -5rem;
         margin-bottom: 2rem;
+
+        // Rating-text under postern.
+        #rating {
+            color: $secondary-color;
+            text-shadow: 3px 4px 4px $primary-color;
+        }
     }
 
+    // Poster.
     img {
         width: 15rem;
-        border: 3px solid white;
-        border-radius: 5px;
+        @include border-and-radius-white;
         margin-top: 2rem;
+        transition: 0.5s ease-in;
     }
 
+    // Hover-animation på poster.
     img:hover {
-        animation: posterPop 2s ease;
+        transform: scale(1.25);
     }
 
+    // Rubrik för trailer.
     #trailerHeading {
-        background-color: black;
-        border: 3px solid white;
-        border-radius: 10px;
+        @include background-black;
+        @include border-and-radius-white;
         padding: 1rem;
         max-width: 60ch;
     }
 
+    // Trailer.
     iframe {
-        background-color: black;
-        border: 3px solid white;
-        border-radius: 10px;
-        display: flex;
+        @include background-black;
+        @include border-not-top;
         align-items: center;
+        margin-top: -3rem;
         margin-bottom: 2rem;
         padding: 0.5rem;
         max-width: 60ch;
@@ -167,18 +196,72 @@ body {
 .new-search-container {
     text-align: center;
 
+    // Knapp.
     button {
         cursor: pointer;
         font: 100% $font-stack;
         width: 225px;
         height: 50px;
         font-size: 125%;
-        background-color: darkred;
-        color: white;
-        border: 3px solid white;
-        border-radius: 10px;
+        @include button-colors;
+        @include border-and-radius-white;
         text-align: center;
         margin: 1rem;
         font-weight: bold;
+    }
+
+    // Hover-effekt på knapp.
+    button:hover {
+        cursor: pointer;
+        background-color: $secondary-color;
+        color: black;
+        text-shadow: 2px 3px 3px $white;
+    }
+}
+
+// Media-queries för olika delar av sidan.
+@media (min-width: 769px) {
+
+    // Rubrik.
+    h1 {
+        font-size: 40px;
+    }
+
+    // Header.
+    header {
+        display: flex;
+        justify-content: space-evenly;
+        margin-bottom: 7rem;
+
+        // Animerad popcorn-bägare.
+        .popcorn {
+            @include popcorn-animation;
+        }
+
+        // Pausar animation vid hover.
+        .popcorn:hover {
+            animation-play-state: paused;
+        }
+
+        // Fortsätter animation när hover slutar.
+        .popcorn.paused {
+            animation-play-state: running;
+        }
+
+        h2 {
+            margin: 0 2rem;
+        }
+    }
+
+    // Animerad popcorn-bägare för mobil-läget syns inte här.
+    .popcorn-mobile {
+        display: none;
+    }
+
+    // Större förstoring för poster.
+    .result-container {
+        img:hover {
+            transform: scale(1.75);
+        }
     }
 }

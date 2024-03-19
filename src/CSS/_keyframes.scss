@@ -3,25 +3,14 @@
 // Animering för popcornbägare.
 @keyframes popcornShake {
     0% {
-        transform: rotate(15deg);
+        transform: rotate(10deg);
     }
 
     50% {
-        transform: rotate(-15deg);
+        transform: rotate(-10deg);
     }
 
     100% {
-        transform: rotate(15deg);
-    }
-}
-
-// Animering för posters.
-@keyframes posterPop {
-    0% {
-        scale: (1);
-    }
-
-    100% {
-        scale: (2);
+        transform: rotate(10deg);
     }
 }
