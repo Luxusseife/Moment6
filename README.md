@@ -11,7 +11,11 @@ Syftet med uppgiften är omsätta kunskaper från tidigare kursmoment och skapa 
 2. Skapa samtliga filer och mappar som behövs för projektet, inklusive moduler för SASS.
 3. Skapa en enkel index-sida med header, en sök-container och en resultat-container.
 4. Skapa funktionalitet för en filmsök och en resultatlista.
-5. Publicera sidan på Github för versionshantering och på Netlify för att kunna följa autmatisk publicering av nya ändringar. 
-6. Skapa en dev-branch i GitHub.
+5. Publicera sidan på Github för versionshantering och skapa en dev-branch.
+6. Publicera på Netlify för att kunna följa autmatisk publicering av nya ändringar. Publikation från dev-branch. 
+7. Skapa ytterligare funktionalitet i form av specificerad filminfo vid klick i listan. 
+8. Skapa än mer funktionalitet i form av en trailervisning samt en ny sök-knapp som vid klick laddar om sidan.
+9. Styla webb-applikationen med SASS och applicera animationer där det passar.
+10. Kontrollera att all funktionalitet fungerar och att sidan är responsiv i olika typer av enheter. 
 
 #### _Skapad av Jenny Lind, jeli2308_.
