@@ -1,1 +1,51 @@
 @use 'base' as *;
+
+// Knappar.
+
+// Sök-knapp.
+#search-button {
+    font: 100% $font-stack;
+    width: 150px;
+    height: 40px;
+    font-size: 125%;
+    @include button-colors;
+    @include border-and-radius-white;
+    text-align: center;
+    margin: 1rem 0 2rem;
+    font-weight: bold;
+
+    // Hover-effekt på sök-knapp.
+    &:hover {
+        cursor: pointer;
+        background-color: $secondary-color;
+        color: black;
+        text-shadow: 2px 3px 3px $white;
+    }
+}
+
+// "Ny sök"-container.
+.new-search-container {
+    text-align: center;
+
+    // Knapp.
+    button {
+        cursor: pointer;
+        font: 100% $font-stack;
+        width: 225px;
+        height: 50px;
+        font-size: 125%;
+        @include button-colors;
+        @include border-and-radius-white;
+        text-align: center;
+        margin: 1rem;
+        font-weight: bold;
+    }
+
+    // Hover-effekt på knapp.
+    button:hover {
+        cursor: pointer;
+        background-color: $secondary-color;
+        color: black;
+        text-shadow: 2px 3px 3px $white;
+    }
+}
