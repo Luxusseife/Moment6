@@ -7,8 +7,8 @@ body {
     font: 100% $font-stack;
     @include background-black;
     background-image: url(../Assets/background.png);
+    min-height: 100vh;
     background-size: cover;
-    background-position: bottom 200px;
     background-repeat: no-repeat;
 
     // Rubriker.
@@ -34,6 +34,10 @@ header {
     margin-bottom: 3rem;
     width: 100%;
 
+    h1 {
+        text-align: center;
+        margin: 1rem auto 1rem auto;
+    }
     // Animerade popcorn-bägare som ej syns i mobil och tablet-läge.
     .popcorn {
         display: none;
