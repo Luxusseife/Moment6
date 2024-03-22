@@ -111,7 +111,7 @@ async function showMovieInfo(movieId) {
         // Skapar en artikel med resultat för vald film.
         const movieDescriptionItem = document.createElement("article");
         movieDescriptionItem.innerHTML = `
-            <img src="${result.title.image.url}">
+            <img src="${result.title.image.url}" alt="movieposter">
             <h3 id="rating">Rating: ${result.ratings.rating} / 10.</h3>
             <h3>Length: ${result.title.runningTimeInMinutes} minutes.</h3>
             <p>${plotText}</p>
